@@ -1,6 +1,7 @@
 import 'package:bmi_project/provider/provider.dart';
 import 'package:bmi_project/routes/Routes.dart';
 import 'package:bmi_project/ui/general-widgets/TextField.dart';
+import 'package:bmi_project/ui/screens/UserData.dart';
 import 'package:bmi_project/ui/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 80,),
                     ElevatedButton(
                       onPressed: (){
-                        p.signUp();
+                        RouteHelper.routeHelper.goToPageWithReplacement(UserData());
                       },
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.blue),

@@ -3,7 +3,7 @@ class Status_Model {
   String weight;
   String date;
   String status;
-  String gender;
+  String time;
 
 
   Status_Model(
@@ -12,7 +12,7 @@ class Status_Model {
         this.weight,
         this.date,
         this.status,
-        this.gender,
+        this.time,
       });
 
   factory Status_Model.fromMap(Map<String, dynamic> map) {
@@ -21,11 +21,11 @@ class Status_Model {
       weight: map['weight'],
       date: map['date'],
       status: map['status'],
-      gender:map['gender'] ,
+      time:map['gender'] ,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {'height':height,'weight':weight,'date':date,'status':status,'gender':gender};
+    return {'height':height,'weight':weight,'date':date,'status':status,'time':time};
   }
 }

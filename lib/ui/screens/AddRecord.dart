@@ -7,14 +7,14 @@ import 'package:bmi_project/ui/screens/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UserData extends StatefulWidget {
+class AddRecord extends StatefulWidget {
 
 
   @override
-  _UserDataState createState() => _UserDataState();
+  _AddRecordState createState() => _AddRecordState();
 }
 
-class _UserDataState extends State<UserData> {
+class _AddRecordState extends State<AddRecord> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -49,49 +49,12 @@ class _UserDataState extends State<UserData> {
                     children: [
                       SizedBox(height: 50,),
                       Text(
-                        "Complete Your",
+                        "Add Record",
                         style: TextStyle(
                             fontSize: 35, color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        "Information",
-                        style: TextStyle(
-                            fontSize: 35, color: Colors.blue, fontWeight: FontWeight.bold),
-                      ),
+
                       SizedBox(height: 30,),
-                      Row(
-                        children: [
-                          Text(
-                            "Gender",
-                            style: TextStyle(
-                                fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(width: 30,),
-
-                          Radio(
-                              value: Gender.Male,
-                              groupValue: p.group,
-                              onChanged: (v) {
-                                p.setGroup(v);
-
-                              }),
-                          Text("Male",style: TextStyle(
-                              fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
-                          SizedBox(width: 50,),
-
-                          Radio(
-                              value: Gender.Female,
-                              groupValue: p.group,
-                              onChanged: (v) {
-                                p.setGroup(v);
-
-                              }),
-                          Text("Female",style: TextStyle(
-                              fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
-
-                        ],
-                      ),
-                      SizedBox(height: 20,),
 
                       Row(
                         children: [
@@ -127,17 +90,28 @@ class _UserDataState extends State<UserData> {
 
                       Row(
                         children: [
-                          Text("Date Of Birth",style: TextStyle(
+                          Text("Date ",style: TextStyle(
                               fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
                           SizedBox(width: 20,),
 
-                          TextFieldWithBorder(p.birthDayController,200,'dd/mm/yyyy'),
+                          TextFieldWithBorder(p.dateController,200,''),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+
+                      Row(
+                        children: [
+                          Text("Time",style: TextStyle(
+                              fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
+                          SizedBox(width: 20,),
+
+                          TextFieldWithBorder(p.timeController,200,''),
                         ],
                       ),
                       SizedBox(height: 30,),
 
                       ElevatedButton(
-                        onPressed:p.signUp,
+                        onPressed:p.createRecordFunction,
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(Colors.blue),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -148,7 +122,7 @@ class _UserDataState extends State<UserData> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 100),
-                          child: Text("Save Data",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,),),
+                          child: Text("Add Record",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,),),
                         ),
                       ),
 

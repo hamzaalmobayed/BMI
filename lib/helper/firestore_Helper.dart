@@ -20,6 +20,8 @@ class FirestoreHelper {
     }
   }
 
+
+
   Future<User_Model> getUserFromFirestore(String userId) async {
     DocumentSnapshot documentSnapshot =
     await firebaseFirestore.collection('Users').doc(userId).get();
@@ -35,6 +37,12 @@ class FirestoreHelper {
     docs.map((e) => User_Model.fromMap(e.data())).toList();
 
     return users;
+  }
+  updateProfile(User_Model userModel) async {
+    await firebaseFirestore
+        .collection('Users')
+        .doc(userModel.id)
+        .update(userModel.toMap());
   }
 
 }

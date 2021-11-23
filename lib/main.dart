@@ -58,7 +58,7 @@ class _SplashState extends State<Splash> {
     super.initState();
     Timer(
         Duration(seconds: 5),
-        () => RouteHelper.routeHelper.goToPageWithReplacement(Login()));
+        () => Provider.of<BMIProvider>(context,listen: false).checkLogin());
   }
 
   @override
@@ -73,22 +73,7 @@ class _SplashState extends State<Splash> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: InkWell(
-              onTap: () {
-                RouteHelper.routeHelper.goToPageWithReplacement(Login());
-              },
-              child: Text(
-                "Next",
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline),
-              ),
-            ),
-          )),
+          ),
     );
   }
 }

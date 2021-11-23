@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 class TextFieldWithBorder extends StatelessWidget {
   TextEditingController con= TextEditingController();
-
-  TextFieldWithBorder(this.con);
+  double width;
+  String hint;
+  TextFieldWithBorder(this.con,this.width,this.hint);
 
   @override
   Widget build(BuildContext context) {
@@ -11,20 +12,25 @@ class TextFieldWithBorder extends StatelessWidget {
         primaryColor:  Colors.blue,
         primaryColorDark:  Colors.blue,
       ),
-      child: Container(
-        width: 150,
-        height: 80,
-        child: new TextField(
-          controller: con,
-          decoration: new InputDecoration(
-              border: new OutlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.blue)),
-              prefixIcon: const Icon(
-                Icons.person,
-                color: Colors.green,
-              ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Container(
+          alignment: Alignment.center,
+          width: width,
+          height: 30,
+          decoration: BoxDecoration(
+              border: Border.fromBorderSide(BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
+          ),
+          child: new TextField(
+            textAlign: TextAlign.center,
+            controller: con,
+            decoration: new InputDecoration(
+                border: InputBorder.none,
+              enabledBorder:InputBorder.none
+
+            ),
+          ),
         ),
-    ),
       ));
   }
 }

@@ -54,11 +54,6 @@ class AuthHelper {
         'we have sent email for reset password, please check your email');
   }
 
-  verifyEmail() async {
-    await firebaseAuth.currentUser.sendEmailVerification();
-    CustomDialoug.customDialoug.showCustomDialoug(
-        'verification email has been sent, please check your email');
-  }
 
   logout() async {
     firebaseAuth.signOut();

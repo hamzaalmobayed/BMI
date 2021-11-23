@@ -5,8 +5,10 @@ class User_Model {
   String id;
   String name;
   String email;
-  List<Status_Model> status;
-  List<Food_Model> food;
+  String gender;
+  String birthday;
+  Map<String,dynamic> status= {};
+  Map<String,dynamic> food= {};
 
 
   User_Model(
@@ -14,6 +16,8 @@ class User_Model {
         this.id,
         this.name,
         this.email,
+        this.gender,
+        this.birthday,
         this.status,
         this.food,
         });
@@ -23,12 +27,14 @@ class User_Model {
       id: map['id'],
       name: map['name'],
       email: map['email'],
+      gender: map['gender'],
+      birthday: map['birthday'],
       status: map['status'],
       food: map['food'],
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {'id':id,'name':name,'email':email,'status':status,'food':food};
+    return {'id':id,'name':name,'email':email,'gender':gender,'birthday':birthday,'status':status,'food':food};
   }
 }
