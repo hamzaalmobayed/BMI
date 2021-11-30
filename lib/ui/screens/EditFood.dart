@@ -6,21 +6,21 @@ import 'package:bmi_project/ui/general-widgets/TextFieldWithBorder.dart';
 import 'package:bmi_project/ui/screens/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-class AddFood extends StatefulWidget {
+class EditFood extends StatefulWidget {
 
   @override
-  _AddFoodState createState() => _AddFoodState();
+  _EditFoodState createState() => _EditFoodState();
 }
 
-class _AddFoodState extends State<AddFood> {
+class _EditFoodState extends State<EditFood> {
   @override
   Widget build(BuildContext context) {
     return Consumer<BMIProvider>(
 
       builder:(context,p,x)=> WillPopScope(
         onWillPop: (){
+          p.EditFile=null;
           return RouteHelper.routeHelper.goToPageWithReplacement(Home());
-
         },
         child: Scaffold(
             resizeToAvoidBottomInset: true,
@@ -28,12 +28,12 @@ class _AddFoodState extends State<AddFood> {
               elevation: 0,
               backgroundColor: Colors.blue,
               leading: IconButton(
-               color: Colors.white,
-               iconSize: 30,
-               icon: Icon(Icons.arrow_back),
-               onPressed: (){
-                   return RouteHelper.routeHelper.goToPageWithReplacement(Home());
-               },
+                color: Colors.white,
+                iconSize: 30,
+                icon: Icon(Icons.arrow_back),
+                onPressed: (){
+                  return RouteHelper.routeHelper.goToPageWithReplacement(Home());
+                },
               ),
               centerTitle: true,
               toolbarHeight: 70,
@@ -57,7 +57,7 @@ class _AddFoodState extends State<AddFood> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Add Food Details",
+                        "Edit Food",
                         style: TextStyle(
                             fontSize: 35, color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
@@ -94,8 +94,8 @@ class _AddFoodState extends State<AddFood> {
                         child: DropdownButton<String>(
                           value:p.selectedCategory,
                           icon: Container(
-                            alignment: Alignment.center,
-                            width: 30,
+                              alignment: Alignment.center,
+                              width: 30,
                               height: 30,
                               decoration: BoxDecoration(
                                   border: Border(left:BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
@@ -159,9 +159,8 @@ class _AddFoodState extends State<AddFood> {
                               borderRadius: BorderRadius.all(Radius.circular(10)),
                               border: Border.fromBorderSide(BorderSide(color: Colors.blue,width: 3,style:BorderStyle.solid))
                           ),
-                          child: p.AddFile==null?Center(child:Text(" Photo",style: TextStyle(
-                              fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),), )
-                              :ClipRRect(borderRadius: BorderRadius.circular(7.0),child: Image.file(p.AddFile, fit: BoxFit.cover,height: 320,width: 320,)),
+                          child: p.EditFile==null?ClipRRect(borderRadius: BorderRadius.circular(7.0),child: Image.network(p.url, fit: BoxFit.cover,height: 320,width: 320,))
+                              :ClipRRect(borderRadius: BorderRadius.circular(7.0),child: Image.file(p.EditFile, fit: BoxFit.cover,height: 320,width: 320,)),
                         )
                       ],
                     ),
@@ -169,8 +168,8 @@ class _AddFoodState extends State<AddFood> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      StyleButton(p.selectAddFile,15,0,"Upload Photo",20),
-                      StyleButton(p.addFood,0,15,"Save",10),
+                      StyleButton(p.selectEditFile,15,0,"Upload Photo",20),
+                      StyleButton(p.editFood,0,15,"Save",10),
 
                     ],
                   ),

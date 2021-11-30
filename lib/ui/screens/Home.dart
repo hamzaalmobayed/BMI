@@ -5,6 +5,7 @@ import 'package:bmi_project/ui/general-widgets/Status.dart';
 import 'package:bmi_project/ui/general-widgets/StyleButton.dart';
 import 'package:bmi_project/ui/screens/AddFood.dart';
 import 'package:bmi_project/ui/screens/UserData.dart';
+import 'package:bmi_project/ui/screens/ViewFood.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class Home extends StatefulWidget {
@@ -118,7 +119,7 @@ class _HomeState extends State<Home> {
 
                 ],
               ),
-              StyleButton((){},20,20,"View Food",50),
+              StyleButton((){RouteHelper.routeHelper.goToPageWithReplacement(ViewFood());},20,20,"View Food",50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

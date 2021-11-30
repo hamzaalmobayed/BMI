@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:bmi_project/helper/auth_Helper.dart';
+import 'package:bmi_project/helper/firestorage_Helper.dart';
 import 'package:bmi_project/helper/firestore_Helper.dart';
+import 'package:bmi_project/model/Food_Model.dart';
 import 'package:bmi_project/model/Status_Model.dart';
 import 'package:bmi_project/model/user.dart';
 import 'package:bmi_project/routes/Routes.dart';
 import 'package:bmi_project/ui/general-widgets/alert.dart';
 import 'package:bmi_project/ui/screens/AddRecord.dart';
+import 'package:bmi_project/ui/screens/EditFood.dart';
 import 'package:bmi_project/ui/screens/Home.dart';
 import 'package:bmi_project/ui/screens/UserData.dart';
 import 'package:bmi_project/ui/screens/login.dart';
@@ -15,6 +18,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:intl/intl.dart';
 import 'dart:io';
@@ -37,11 +41,14 @@ class BMIProvider extends ChangeNotifier{
   TextEditingController lengthController= TextEditingController(text: '');
   TextEditingController timeController= TextEditingController(text: '');
   TextEditingController dateController= TextEditingController(text: '');
+  TextEditingController nameController= TextEditingController(text: '');
+  TextEditingController caloryController= TextEditingController(text: '');
   bool obscure=true;
   bool obscureSignUp=true;
   Gender group=Gender.Male;
   List<String> categoryList;
   String selectedCategory;
+
   selectCategory(String category) {
     this.selectedCategory = category;
     notifyListeners();
@@ -52,6 +59,20 @@ class BMIProvider extends ChangeNotifier{
     selectCategory(categoryList.first);
     notifyListeners();
 
+  }
+  File AddFile;
+  File EditFile;
+  selectAddFile() async {
+    XFile imageFile =
+    await ImagePicker().pickImage(source: ImageSource.gallery);
+    this.AddFile = File(imageFile.path);
+    notifyListeners();
+  }
+  selectEditFile() async {
+    XFile imageFile =
+    await ImagePicker().pickImage(source: ImageSource.gallery);
+    this.EditFile = File(imageFile.path);
+    notifyListeners();
   }
   setObscure(){
     obscure=!obscure;
@@ -115,11 +136,67 @@ class BMIProvider extends ChangeNotifier{
   }
   createRecordFunction(){
     i++;
-  Status_Model status=Status_Model(weight: weightController.text,height: lengthController.text,date: birthDayController.text,time:group==Gender.Male?"Male":"Female");
-  print(status.weight);
+    Status_Model status=Status_Model(weight: weightController.text,height: lengthController.text,date: dateController.text,time:timeController.text);
   user.status.addEntries([MapEntry('status$i',status.toMap())]);
   FirestoreHelper.firestoreHelper.updateProfile(user);
   }
+  int z=0;
+  addFood()async{
+    String imageUrl =
+        await FirebaseStorageHelper.firebaseStorageHelper.uploadImage(AddFile);
+    Food_Model food=Food_Model(calory: caloryController.text,name: nameController.text,category: selectedCategory,photo:imageUrl );
+    user.food.addEntries([MapEntry('food$z',food.toMap())]);
+    FirestoreHelper.firestoreHelper.updateProfile(user);
+    z++;
+  }
+  int index;
+  String url;
+
+  goEditFood(int index)async{
+    this.index=index;
+    nameController.text=user.food['food$index']['name'];
+    caloryController.text=user.food['food$index']['calory'];
+    selectedCategory=user.food['food$index']['category'];
+    url=user.food['food$index']['photo'];
+    RouteHelper.routeHelper.goToPageWithReplacement(EditFood());
+
+  }
+  editFood()async{
+    String imageUrl;
+    if(EditFile!=null){
+      imageUrl =
+      await FirebaseStorageHelper.firebaseStorageHelper.uploadImage(EditFile);
+    }
+    user.food['food$index']['name']=nameController.text;
+    user.food['food$index']['calory']=caloryController.text;
+    user.food['food$index']['category']=selectedCategory;
+    user.food['food$index']['photo']=imageUrl==null?user.food['food$index']['photo']:imageUrl;
+    FirestoreHelper.firestoreHelper.updateProfile(user);
+    notifyListeners();
+
+  }
+  List<Food_Model> foodList;
+  deleteFood(int index) async{
+    foodList.removeAt(index);
+    --z;
+    notifyListeners();
+  }
+  getFoodList(){
+    List<Food_Model> foodList=user.food.entries.map((e) => Food_Model.fromMap(e.value)).toList();
+    this.foodList=foodList;
+    notifyListeners();
+  }
+  updateFoodMap(){
+    int i=0;
+    user.food.clear();
+    foodList.forEach((element) {
+      user.food.addEntries([MapEntry('food$i',element.toMap())]);
+      ++i;
+    });
+    FirestoreHelper.firestoreHelper.updateProfile(user);
+    notifyListeners();
+  }
+
   User_Model user;
   getUserFromFirestore() async {
     String userId = AuthHelper.authHelper.getUserId();
@@ -149,7 +226,11 @@ class BMIProvider extends ChangeNotifier{
     resetControllers();
   }
   logout() {
+    i=0;
+    z=0;
     AuthHelper.authHelper.logout();
+    resetControllers();
+    user=null;
     RouteHelper.routeHelper.goToPageWithReplacement(Login());
 
   }
@@ -163,6 +244,7 @@ class BMIProvider extends ChangeNotifier{
       RouteHelper.routeHelper.goToPageWithReplacement(Login());
     }
   }
+
   resetControllers() {
     UserNameController.clear();
     PasswordController.clear();
