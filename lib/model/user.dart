@@ -9,6 +9,7 @@ class User_Model {
   String birthday;
   Map<String,dynamic> status= {};
   Map<String,dynamic> food= {};
+  Map<String,dynamic> meal= {};
 
 
   User_Model(
@@ -20,6 +21,7 @@ class User_Model {
         this.birthday,
         this.status,
         this.food,
+        this.meal,
         });
 
   factory User_Model.fromMap(Map<String, dynamic> map) {
@@ -31,10 +33,11 @@ class User_Model {
       birthday: map['birthday'],
       status: map['status'],
       food: map['food'],
+      meal: map['meal'],
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {'id':id,'name':name,'email':email,'gender':gender,'birthday':birthday,'status':status,'food':food};
+    return {'id':id,'name':name,'email':email,'gender':gender,'birthday':birthday,'status':status,'food':food,'meal':meal};
   }
 }

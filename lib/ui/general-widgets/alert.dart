@@ -10,6 +10,8 @@ class CustomDialoug {
         builder: (context) {
           return AlertDialog(
             content: Text(message),
+            backgroundColor: Colors.blue,
+            contentTextStyle: TextStyle(color: Colors.white,fontSize: 20),
             actions: [
               TextButton(
                   onPressed: () {
@@ -20,7 +22,7 @@ class CustomDialoug {
                       RouteHelper.routeHelper.back();
                     }
                   },
-                  child: Text('ok'))
+                  child: Text('ok',style: TextStyle(color: Colors.white,fontSize: 20),))
             ],
           );
         });

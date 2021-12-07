@@ -58,7 +58,7 @@ class _StatusState extends State<Status> {
                   child: Container(
                     width: 130,
                     height: 60,
-                    child: Center(child: Text(Provider.of<BMIProvider>(context,listen: false).user.status['status$index']['status']==null?'normal':'')),
+                    child: Center(child: Text((Provider.of<BMIProvider>(context,listen: false).determineStatus(index )))),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10)),

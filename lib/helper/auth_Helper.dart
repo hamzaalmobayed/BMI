@@ -1,5 +1,7 @@
 import 'package:bmi_project/provider/provider.dart';
+import 'package:bmi_project/routes/Routes.dart';
 import 'package:bmi_project/ui/general-widgets/alert.dart';
+import 'package:bmi_project/ui/screens/Home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,13 +33,16 @@ class AuthHelper {
       print(e);
     }
   }
-
+int i;
   Future<UserCredential> signin(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
+      i=1;
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
+      i=0;
       if (e.code == 'user-not-found') {
         CustomDialoug.customDialoug
             .showCustomDialoug('No user found for that email.');

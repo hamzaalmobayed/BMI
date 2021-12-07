@@ -16,7 +16,8 @@ class TextFieldAdding extends StatefulWidget {
 class _TextFieldAddingState extends State<TextFieldAdding> {
   @override
   Widget build(BuildContext context) {
-    return widget.icon==null?TextField(
+    return widget.icon==null?TextFormField(
+      validator: Provider.of<BMIProvider>(context,listen: false).validateName,
       controller: widget.con,
       obscureText: widget.obscure,
       decoration: new InputDecoration(
@@ -31,7 +32,8 @@ class _TextFieldAddingState extends State<TextFieldAdding> {
               )
           )
       ),
-    ):TextField(
+    ):TextFormField(
+      validator: Provider.of<BMIProvider>(context,listen: false).validatePassword,
       controller: widget.con,
       obscureText: widget.obscure,
       decoration: new InputDecoration(

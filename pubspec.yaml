@@ -29,6 +29,8 @@ dependencies:
   firebase_auth: ^3.0.1
   path_provider: ^2.0.1
   cloud_firestore: "^2.5.0"
+  fluttertoast: ^8.0.7
+  string_validator: ^0.3.0
   intl: ^0.17.0
   firebase_storage: ^10.0.2
   image_picker: ^0.8.3+3

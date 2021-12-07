@@ -35,7 +35,7 @@ class _ViewShapeState extends State<ViewShape> {
               child: Container(
                 height: 150,
                 width: 100,
-                child: Image.network(widget.img,width: 100,height: 150,fit: BoxFit.cover,),
+                child:widget.img==null?Center(child: CircularProgressIndicator(color: Colors.blue,strokeWidth: 3,),): Image.network(widget.img,width: 100,height: 150,fit: BoxFit.cover,),
                 decoration: BoxDecoration(
 
                     border: Border(right:BorderSide(color: Colors.blue,width: 2,style:BorderStyle.solid))
@@ -53,7 +53,7 @@ class _ViewShapeState extends State<ViewShape> {
                       fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),),
                   Text(widget.category,style: TextStyle(
                       fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
-                  Text(widget.calory+' cal/g',style: TextStyle(
+                  Text(widget.calory,style: TextStyle(
                       fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),)
                 ],
               ),
