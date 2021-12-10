@@ -1,5 +1,6 @@
 import 'package:bmi_project/provider/provider.dart';
 import 'package:bmi_project/routes/Routes.dart';
+import 'package:bmi_project/ui/general-widgets/StyleButton.dart';
 import 'package:bmi_project/ui/general-widgets/TextField.dart';
 import 'package:bmi_project/ui/screens/UserData.dart';
 import 'package:bmi_project/ui/screens/login.dart';
@@ -27,6 +28,9 @@ class _SignUpContentState extends State<SignUpContent> {
             child: Column(
               children: [
                 SizedBox(height: 50,),
+
+                /**************** title of screen ****************/
+
                 Text(
                   "Create New Account",
                   style: TextStyle(
@@ -38,6 +42,8 @@ class _SignUpContentState extends State<SignUpContent> {
                       fontSize: 17, color: Colors.grey, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 30,),
+
+                /**************** data fields ****************/
 
                 Form(
                   key: p.formKey2,
@@ -51,30 +57,22 @@ class _SignUpContentState extends State<SignUpContent> {
                   ),
                 ),
                 SizedBox(height: 80,),
-                ElevatedButton(
-                  onPressed: (){
-                    if (p.formKey2.currentState.validate()) {
-                      RouteHelper.routeHelper.goToPageWithReplacement(UserData());
-                      print("Validated");
-                    }else{
-                      print("Not Validated");
-                    }
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          )
-                      )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 100),
-                    child: Text("CREATE",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,),),
-                  ),
-                ),
+
+                /**************** sign up button ****************/
+
+                StyleButton((){
+                  if (p.formKey2.currentState.validate()) {
+                    RouteHelper.routeHelper.goToPageWithReplacement(UserData());
+                    print("Validated");
+                  }else{
+                    print("Not Validated");
+                  }
+                }, 0, 0, "CREATE", 100),
+
 
                 SizedBox(height: 30,),
+
+                /**************** go to log in button ****************/
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

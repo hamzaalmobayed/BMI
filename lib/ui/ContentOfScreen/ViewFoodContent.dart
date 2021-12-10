@@ -22,6 +22,9 @@ class _ViewFoodContentState extends State<ViewFoodContent> {
         child: ListView(
           children: [
             SizedBox(height: 20,),
+
+            /**************** title of screen  ************************/
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -32,6 +35,8 @@ class _ViewFoodContentState extends State<ViewFoodContent> {
                 ),
               ],
             ),
+
+            /****************  food list  ************************/
 
             Container(
 

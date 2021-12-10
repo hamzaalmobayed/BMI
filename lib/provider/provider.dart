@@ -57,13 +57,14 @@ class BMIProvider extends ChangeNotifier{
   TextEditingController caloryController= TextEditingController(text: '');
   TextEditingController amountController= TextEditingController(text: '');
   bool obscure=true;
-  final GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
-  final GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey1 = GlobalKey<FormState>(debugLabel: "someState1");
+  final GlobalKey<FormState> formKey2 = GlobalKey<FormState>(debugLabel: "someState2");
   bool obscureSignUp=true;
   Gender group=Gender.Male;
   List<String> categoryList;
   String selectedCategory;
   List<String> caloryList;
+  List<Status_Model> reversedList;
   String selectedCalory;
   List<List<String>> matrix=[
     ["so bad","so bad","so bad","little changes","little changes","still good","go ahead","go ahead"],
@@ -125,6 +126,18 @@ class BMIProvider extends ChangeNotifier{
     this.caloryList = calory;
     selectCalory(caloryList.first);
     notifyListeners();
+
+  }
+  /**************** 7- get reversed list ****************/
+
+  getReversedList() async {
+    List<Status_Model> statusList;
+    Future.delayed(Duration(seconds: 2),(){
+      statusList=user.status.entries.map((e) => Status_Model.fromMap(e.value)).toList();
+      this.reversedList = statusList.reversed.toList();
+      notifyListeners();
+
+    });
 
   }
 
@@ -232,6 +245,7 @@ class BMIProvider extends ChangeNotifier{
 
   double bmi;
   int firstIndex;
+  int secondIndex;
   String initialStatus;
   double differanceBmi;
 
@@ -239,8 +253,8 @@ class BMIProvider extends ChangeNotifier{
 
   calculateBMI(int index){
     int agePercent;
-    double weight=double.parse(user.status['status$index']['weight']);
-    double height=double.parse(user.status['status$index']['height'])/100;
+    double weight=double.parse(reversedList[index].weight);
+    double height=double.parse(reversedList[index].height)/100;
     int bornYear=int.parse(user.birthday.split('/').last);
     int currentYear=DateTime.now().year;
     int age=currentYear-bornYear;
@@ -267,7 +281,6 @@ class BMIProvider extends ChangeNotifier{
       initialStatus="obesity";
       firstIndex=3;
     }
-
     return bmi;
   }
 
@@ -279,33 +292,35 @@ class BMIProvider extends ChangeNotifier{
     }else{
       differanceBmi=calculateBMI(index)-calculateBMI(index-1);
     }
-    print(differanceBmi);
-    print('****************');
+    if(differanceBmi<-1){
+      secondIndex=0;
+    }else if(differanceBmi>=-1&&differanceBmi<-0.6){
+      secondIndex=1;
+    }else if(differanceBmi>=-0.6&&differanceBmi<-0.3){
+      secondIndex=2;
+    }else if(differanceBmi>=-0.3&&differanceBmi<0){
+      secondIndex=3;
+    }else if(differanceBmi>=0&&differanceBmi<0.3){
+      secondIndex=4;
+    }else if(differanceBmi>=0.3&&differanceBmi<0.6){
+      secondIndex=5;
+    }else if(differanceBmi>=0.6&&differanceBmi<1){
+      secondIndex=6;
+    }else if(differanceBmi>=1){
+      secondIndex=7;
+    }
+
   }
+
+  /**************** 3- determine Status ****************/
+
   determineStatus(int i){
+    if(i==0){
+
+    }
     getDifferanceBmi(i);
     calculateBMI(i);
-    int index;
-    if(differanceBmi<-1){
-      index=0;
-    }else if(differanceBmi>=-1&&differanceBmi<-0.6){
-      index=1;
-    }else if(differanceBmi>=-0.6&&differanceBmi<-0.3){
-      index=2;
-    }else if(differanceBmi>=-0.3&&differanceBmi<0){
-      index=3;
-    }else if(differanceBmi>=0&&differanceBmi<0.3){
-      index=4;
-    }else if(differanceBmi>=0.3&&differanceBmi<0.6){
-      index=5;
-    }else if(differanceBmi>=0.6&&differanceBmi<1){
-      index=6;
-    }else if(differanceBmi>=1){
-      index=7;
-    }
-    print(index);
-
-    return matrix[firstIndex][index];
+    return matrix[firstIndex][secondIndex];
   }
 
   /**************** 3- transport to add record screen ****************/
@@ -358,7 +373,7 @@ class BMIProvider extends ChangeNotifier{
     Loading.loading.loadingMessage();
     String imageUrl =
     ispressed?await FirebaseStorageHelper.firebaseStorageHelper.uploadImage(AddFile):user.food['food$t']['photo'];
-    Food_Model food=Food_Model(calory: caloryController.text+selectedCalory,name: nameController.text,category: selectedCategory,photo:imageUrl );
+    Food_Model food=Food_Model(calory: caloryController.text+" "+selectedCalory,name: nameController.text,category: selectedCategory,photo:imageUrl );
     user.food.addEntries([MapEntry('food$z',food.toMap())]);
     FirestoreHelper.firestoreHelper.updateProfile(user);
     ispressed=false;
@@ -373,9 +388,10 @@ class BMIProvider extends ChangeNotifier{
   String url;
 
   goEditFood(int index)async{
+    List<String> calory=user.food['food$index']['calory'].split(" ");
     this.index=index;
     nameController.text=user.food['food$index']['name'];
-    caloryController.text=user.food['food$index']['calory'];
+    caloryController.text=calory[0];
     selectedCategory=user.food['food$index']['category'];
     url=user.food['food$index']['photo'];
     RouteHelper.routeHelper.goToPageWithReplacement(EditFood());
@@ -391,7 +407,7 @@ class BMIProvider extends ChangeNotifier{
       await FirebaseStorageHelper.firebaseStorageHelper.uploadImage(EditFile);
     }
     user.food['food$index']['name']=nameController.text;
-    user.food['food$index']['calory']=caloryController.text;
+    user.food['food$index']['calory']=caloryController.text+" "+selectedCalory;
     user.food['food$index']['category']=selectedCategory;
     user.food['food$index']['photo']=imageUrl==null?user.food['food$index']['photo']:imageUrl;
     FirestoreHelper.firestoreHelper.updateProfile(user);
@@ -476,7 +492,7 @@ class BMIProvider extends ChangeNotifier{
 
   /********* 4-log out ****************************/
 
-  logout() {
+  logout() async{
     z=0;
     AuthHelper.authHelper.logout();
     resetControllers();
@@ -501,6 +517,15 @@ class BMIProvider extends ChangeNotifier{
   /********* 6-clear fields  ************************/
 
   resetControllers() {
+    nameController.clear();
+    selectedCategory="";
+    selectedCalory="";
+    caloryController.clear();
+    AddFile=null;
+  }
+  /********* 7-clear fields  ************************/
+
+  resetAddFoodControllers() {
     UserNameController.clear();
     PasswordController.clear();
   }

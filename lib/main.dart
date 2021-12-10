@@ -16,6 +16,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,6 +54,7 @@ class Splash extends StatefulWidget {
 Color mainColor = Color.fromRGBO(220, 151, 33, 1);
 
 class _SplashState extends State<Splash> {
+
   @override
   void initState() {
     super.initState();

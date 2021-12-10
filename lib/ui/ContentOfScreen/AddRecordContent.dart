@@ -1,4 +1,5 @@
 import 'package:bmi_project/provider/provider.dart';
+import 'package:bmi_project/ui/general-widgets/StyleButton.dart';
 import 'package:bmi_project/ui/general-widgets/TextFieldWithBorder.dart';
 import 'package:bmi_project/ui/general-widgets/arthmaticIcon.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class _AddRecordContentState extends State<AddRecordContent> {
             child: Column(
               children: [
                 SizedBox(height: 50,),
+                /**************** title of screen ****************/
+
                 Text(
                   "Add Record",
                   style: TextStyle(
@@ -32,6 +35,8 @@ class _AddRecordContentState extends State<AddRecordContent> {
                 ),
 
                 SizedBox(height: 30,),
+
+                /**************** weight field ****************/
 
                 Row(
                   children: [
@@ -49,6 +54,8 @@ class _AddRecordContentState extends State<AddRecordContent> {
                 ),
                 SizedBox(height: 20,),
 
+                /**************** lenght field ****************/
+
                 Row(
                   children: [
                     Text("Length",style: TextStyle(
@@ -65,6 +72,8 @@ class _AddRecordContentState extends State<AddRecordContent> {
                 ),
                 SizedBox(height: 20,),
 
+                /**************** date field ****************/
+
                 Row(
                   children: [
                     Text("Date ",style: TextStyle(
@@ -75,6 +84,8 @@ class _AddRecordContentState extends State<AddRecordContent> {
                   ],
                 ),
                 SizedBox(height: 20,),
+
+                /**************** time field ****************/
 
                 Row(
                   children: [
@@ -87,21 +98,10 @@ class _AddRecordContentState extends State<AddRecordContent> {
                 ),
                 SizedBox(height: 30,),
 
-                ElevatedButton(
-                  onPressed:p.createRecordFunction,
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          )
-                      )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical:15.0,horizontal: 90),
-                    child: Text("Add Record",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,),),
-                  ),
-                ),
+                /**************** button of screen ****************/
+
+                StyleButton(p.createRecordFunction, 0, 0, "Add Record", 90),
+
 
               ],
             ),

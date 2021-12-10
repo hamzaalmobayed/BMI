@@ -23,6 +23,9 @@ class _EditFoodContentState extends State<EditFoodContent> {
         child: ListView(
           children: [
             SizedBox(height: 20,),
+
+            /**************** title of screen ****************/
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -34,6 +37,8 @@ class _EditFoodContentState extends State<EditFoodContent> {
               ],
             ),
             SizedBox(height: 20,),
+
+            /**************** name field ****************/
 
             Row(
               children: [
@@ -47,6 +52,8 @@ class _EditFoodContentState extends State<EditFoodContent> {
               ],
             ),
             SizedBox(height: 20,),
+
+            /**************** category field ****************/
 
             Row(
               children: [
@@ -99,6 +106,8 @@ class _EditFoodContentState extends State<EditFoodContent> {
 
             SizedBox(height: 20,),
 
+            /**************** calory field ****************/
+
             Row(
               children: [
                 SizedBox(width: 20,),
@@ -107,14 +116,52 @@ class _EditFoodContentState extends State<EditFoodContent> {
                     fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
                 SizedBox(width: 60,),
 
-                TextFieldWithBorder(p.caloryController,150,''),
-                SizedBox(width:1,),
+                TextFieldWithBorder(p.caloryController,100,''),
+                SizedBox(width:4,),
 
-                Text(" cal / g",style: TextStyle(
-                    fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.fromBorderSide(BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
+                  ),
+                  height: 30,
+                  width: 95,
+                  child: DropdownButton<String>(
+                    value:p.selectedCalory,
+                    icon: Container(
+                        alignment: Alignment.center,
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            border: Border(left:BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
+                        ),
+                        child: Icon(Icons.arrow_drop_down,color: Colors.blue,)
+                    ),
+
+                    iconSize: 30,
+                    elevation: 16,
+                    isExpanded: true,
+                    style: TextStyle(color: Colors.black, fontSize: 17.0),
+                    underline: Container(
+                      height: 2,
+                    ),
+                    onChanged: (newValue) {
+                      p.selectCalory(newValue);
+
+                    },
+                    items:
+                    p.caloryList.map((value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Center(child: Text(value,style: TextStyle( fontSize: 12.0),)),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 20,),
+
+            /**************** show photo ****************/
 
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
@@ -135,6 +182,9 @@ class _EditFoodContentState extends State<EditFoodContent> {
                 ],
               ),
             ),
+
+            /**************** buttons of screen ****************/
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -1,4 +1,5 @@
 import 'package:bmi_project/provider/provider.dart';
+import 'package:bmi_project/ui/general-widgets/StyleButton.dart';
 import 'package:bmi_project/ui/general-widgets/TextFieldWithBorder.dart';
 import 'package:bmi_project/ui/general-widgets/arthmaticIcon.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,9 @@ class _UserDataContentState extends State<UserDataContent> {
             child: Column(
               children: [
                 SizedBox(height: 50,),
+
+                /**************** title of screen ****************/
+
                 Text(
                   "Complete Your",
                   style: TextStyle(
@@ -36,6 +40,9 @@ class _UserDataContentState extends State<UserDataContent> {
                       fontSize: 35, color: Colors.blue, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 30,),
+
+                /**************** gender radio button ****************/
+
                 Row(
                   children: [
                     Text(
@@ -70,6 +77,8 @@ class _UserDataContentState extends State<UserDataContent> {
                 ),
                 SizedBox(height: 20,),
 
+                /**************** weight field ****************/
+
                 Row(
                   children: [
                     Text("Weight",style: TextStyle(
@@ -85,6 +94,8 @@ class _UserDataContentState extends State<UserDataContent> {
                   ],
                 ),
                 SizedBox(height: 20,),
+
+                /**************** length field ****************/
 
                 Row(
                   children: [
@@ -102,6 +113,8 @@ class _UserDataContentState extends State<UserDataContent> {
                 ),
                 SizedBox(height: 20,),
 
+                /**************** birthday ****************/
+
                 Row(
                   children: [
                     Text("Date Of Birth",style: TextStyle(
@@ -113,21 +126,9 @@ class _UserDataContentState extends State<UserDataContent> {
                 ),
                 SizedBox(height: 30,),
 
-                ElevatedButton(
-                  onPressed:p.signUp,
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          )
-                      )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 100),
-                    child: Text("Save Data",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,),),
-                  ),
-                ),
+                /**************** save data button ****************/
+
+                StyleButton(p.signUp, 0, 0, "Save Data", 100),
 
               ],
             ),
