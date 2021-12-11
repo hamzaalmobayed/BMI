@@ -12,19 +12,24 @@ class Status extends StatefulWidget {
 class _StatusState extends State<Status> {
   @override
   Widget build(BuildContext context) {
-    Map<String,dynamic> status=Provider.of<BMIProvider>(context,listen: false).user.status;
     return Consumer<BMIProvider>(
       builder:(context,p,x)=>ListView.builder(
         shrinkWrap: true,
-        itemCount: Provider.of<BMIProvider>(context,listen: false).user.status.length,
+        itemCount: p.reversedList.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Column(
               children: [
+
+                /******************************* date and weight ****************/
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+
+                    /**************** date ****************/
+
                     Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: Container(
@@ -37,6 +42,9 @@ class _StatusState extends State<Status> {
                         ),
                       ),
                     ),
+
+                    /**************** weight ****************/
+
                     Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: Container(
@@ -51,10 +59,16 @@ class _StatusState extends State<Status> {
                     )
                   ],
                 ),
+
+                /**************************** status and height ****************/
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  Padding(
+
+                    /**************** status ****************/
+
+                    Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: Container(
                       width: 130,
@@ -66,7 +80,10 @@ class _StatusState extends State<Status> {
                       ),
                     ),
                   ),
-                  Padding(
+
+                    /**************** height ****************/
+
+                    Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: Container(
                       width: 130,
