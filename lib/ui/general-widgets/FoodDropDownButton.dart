@@ -3,6 +3,9 @@ import 'package:bmi_project/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class FoodDropDownButton extends StatefulWidget {
+Function function;
+
+FoodDropDownButton(this.function);
 
   @override
   _FoodDropDownButtonState createState() => _FoodDropDownButtonState();
@@ -37,10 +40,7 @@ class _FoodDropDownButtonState extends State<FoodDropDownButton> {
           underline: Container(
             height: 2,
           ),
-          onChanged: (newValue) {
-            p.selectFood(newValue);
-
-          },
+          onChanged: widget.function,
           items:
           p.food.map((value) {
             return DropdownMenuItem<Food_Model>(

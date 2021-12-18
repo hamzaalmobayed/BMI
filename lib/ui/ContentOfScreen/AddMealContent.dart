@@ -46,7 +46,7 @@ class _AddMealContentState extends State<AddMealContent> {
                     Text("Food",style: TextStyle(
                         fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
                     SizedBox(width: 80,),
-                    FoodDropDownButton(),
+                    p.food==null?FoodDropDownButton((newValue) {}):FoodDropDownButton((newValue) {p.selectFood(newValue);}),
 
                   ],
                 ),

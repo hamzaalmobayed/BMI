@@ -57,8 +57,8 @@ class BMIProvider extends ChangeNotifier{
   TextEditingController caloryController= TextEditingController(text: '');
   TextEditingController amountController= TextEditingController(text: '');
   bool obscure=true;
-  final GlobalKey<FormState> formKey1 = GlobalKey<FormState>(debugLabel: "someState1");
-  final GlobalKey<FormState> formKey2 = GlobalKey<FormState>(debugLabel: "someState2");
+    GlobalKey<FormState> formKey1 = GlobalKey<FormState>(debugLabel: "someState1");
+    GlobalKey<FormState> formKey2 = GlobalKey<FormState>(debugLabel: "someState2");
   bool obscureSignUp=true;
   Gender group=Gender.Male;
   List<String> categoryList;
@@ -247,6 +247,7 @@ class BMIProvider extends ChangeNotifier{
   int firstIndex;
   int secondIndex;
   String initialStatus;
+  String lastStatus;
   double differanceBmi;
 
   /**************** 1- calculate Bmi ****************/
@@ -287,10 +288,10 @@ class BMIProvider extends ChangeNotifier{
   /**************** 2- calculate difference between two last BMI ****************/
 
   getDifferanceBmi(int index){
-    if(index==0){
-      differanceBmi=calculateBMI(0)-0;
+    if(index==reversedList.length-1){
+      differanceBmi=calculateBMI(index)-0;
     }else{
-      differanceBmi=calculateBMI(index)-calculateBMI(index-1);
+      differanceBmi=calculateBMI(index)-calculateBMI(index+1);
     }
     if(differanceBmi<-1){
       secondIndex=0;
@@ -315,12 +316,10 @@ class BMIProvider extends ChangeNotifier{
   /**************** 3- determine Status ****************/
 
   determineStatus(int i){
-    if(i==0){
-
-    }
     getDifferanceBmi(i);
     calculateBMI(i);
-    return matrix[firstIndex][secondIndex];
+    lastStatus= matrix[firstIndex][secondIndex];
+    return initialStatus;
   }
 
   /**************** 3- transport to add record screen ****************/
@@ -464,14 +463,17 @@ class BMIProvider extends ChangeNotifier{
     var outputDate = outputDateFormat.format(DateTime.now());
     var outputTime = outputTimeFormat.format(DateTime.now());
     Status_Model status=Status_Model(weight: weightController.text,height: lengthController.text,date: outputDate.toString(),time:outputTime.toString());
+    Loading.loading.loadingMessage();
     UserCredential user=await AuthHelper.authHelper.signup(EmailController.text, SignUpPasswordController.text);
     Future.delayed(Duration(seconds: 2)).then((value) {
       FirestoreHelper.firestoreHelper.add(User_Model(id: user.user.uid,name: NameController.text,email: EmailController.text,gender: group==Gender.Male?"Male":"Female",birthday:birthDayController.text ,food: {},status: {"status0":status.toMap()},meal: {}));
     });
     UserCredential userCredinial =await AuthHelper.authHelper.signin(EmailController.text, SignUpPasswordController.text);bool isVerifiedEmail = AuthHelper.authHelper.checkEmailVerification();
-    getUserFromFirestore();
     RouteHelper.routeHelper.goToPageWithReplacement(Home());
 
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      getUserFromFirestore();
+    });
   }
 
   /********* 3-log in **************************/

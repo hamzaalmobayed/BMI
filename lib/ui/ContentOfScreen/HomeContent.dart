@@ -61,6 +61,7 @@ class _HomeContentState extends State<HomeContent> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    padding: EdgeInsets.only(bottom: 20),
                     alignment: Alignment.center,
                     height: 60,
                     width: 320,
@@ -70,7 +71,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                      child: Text(p.reversedList==null?"waiting.....":p.determineStatus(0)+'('+p.initialStatus+")",
+                      child: Text(p.reversedList==null?"waiting.....":p.determineStatus(0)+'('+p.lastStatus+")",
                         style: TextStyle(
                             fontSize: 18, color: Colors.black),
                       ),
