@@ -57,8 +57,8 @@ class BMIProvider extends ChangeNotifier{
   TextEditingController caloryController= TextEditingController(text: '');
   TextEditingController amountController= TextEditingController(text: '');
   bool obscure=true;
-    GlobalKey<FormState> formKey1 = GlobalKey<FormState>(debugLabel: "someState1");
-    GlobalKey<FormState> formKey2 = GlobalKey<FormState>(debugLabel: "someState2");
+    GlobalKey<FormState> loginFormKey = GlobalKey<FormState>(debugLabel: "someState1");
+  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(debugLabel: "someState2");
   bool obscureSignUp=true;
   Gender group=Gender.Male;
   List<String> categoryList;
@@ -66,6 +66,7 @@ class BMIProvider extends ChangeNotifier{
   List<String> caloryList;
   List<Status_Model> reversedList;
   String selectedCalory;
+  String onpressedScreen;
   List<List<String>> matrix=[
     ["so bad","so bad","so bad","little changes","little changes","still good","go ahead","go ahead"],
     ["so bad","be careful","be careful","little changes","little changes","be careful","be careful","be careful"],
@@ -139,6 +140,11 @@ class BMIProvider extends ChangeNotifier{
 
     });
 
+  }
+  /**************** 8- select screen ****************/
+  selectScreen(String screen) {
+    this.onpressedScreen = screen;
+    notifyListeners();
   }
 
   /*************  images picker Functions  ***************************************************/
@@ -391,6 +397,7 @@ class BMIProvider extends ChangeNotifier{
     this.index=index;
     nameController.text=user.food['food$index']['name'];
     caloryController.text=calory[0];
+    selectedCalory=calory[1];
     selectedCategory=user.food['food$index']['category'];
     url=user.food['food$index']['photo'];
     RouteHelper.routeHelper.goToPageWithReplacement(EditFood());
@@ -555,7 +562,8 @@ class BMIProvider extends ChangeNotifier{
       return "two passwords not the same";
     }
     return null;
-  }String validateName(String value) {
+  }
+  String validateName(String value) {
     if (value.isEmpty) {
       return "* Required";
     }

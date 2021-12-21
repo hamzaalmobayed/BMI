@@ -46,7 +46,7 @@ class _LoginContentState extends State<LoginContent> {
                 /**************** username and password fields ****************/
 
                 Form(
-                  key: p.formKey1,
+                  key: p.loginFormKey,
                   child: Column(
                     children: [
                       TextFieldAdding("UserName",p.UserNameController,false),
@@ -59,7 +59,7 @@ class _LoginContentState extends State<LoginContent> {
                 /**************** login button ****************/
 
                 StyleButton((){
-                  if (p.formKey1.currentState.validate()) {
+                  if (p.loginFormKey.currentState.validate()) {
                     Loading.loading.loadingMessage();
                     p.login();
                     print("Validated");

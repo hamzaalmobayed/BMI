@@ -2,10 +2,12 @@ import 'package:bmi_project/provider/provider.dart';
 import 'package:bmi_project/routes/Routes.dart';
 import 'package:bmi_project/ui/general-widgets/StyleButton.dart';
 import 'package:bmi_project/ui/general-widgets/TextField.dart';
+import 'package:bmi_project/ui/general-widgets/alert.dart';
 import 'package:bmi_project/ui/screens/UserData.dart';
 import 'package:bmi_project/ui/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:string_validator/string_validator.dart';
 class SignUpContent extends StatefulWidget {
 
   @override
@@ -46,7 +48,7 @@ class _SignUpContentState extends State<SignUpContent> {
                 /**************** data fields ****************/
 
                 Form(
-                  key: p.formKey2,
+                  key: p.signupFormKey,
                   child: Column(
                     children: [
                       TextFieldAdding("Name",p.NameController,false),
@@ -61,8 +63,14 @@ class _SignUpContentState extends State<SignUpContent> {
                 /**************** sign up button ****************/
 
                 StyleButton((){
-                  if (p.formKey2.currentState.validate()) {
-                    RouteHelper.routeHelper.goToPageWithReplacement(UserData());
+                  if (p.signupFormKey.currentState.validate()) {
+                    if(!isEmail(p.EmailController.text)){
+                      CustomDialoug.customDialoug.showCustomDialoug("Email Format is wrong!!!");
+                    }else if(p.RePasswordController.text!=p.SignUpPasswordController.text){
+                      CustomDialoug.customDialoug.showCustomDialoug("two password not same!!!");
+                    }else{
+                      RouteHelper.routeHelper.goToPageWithReplacement(UserData());
+                    }
                     print("Validated");
                   }else{
                     print("Not Validated");

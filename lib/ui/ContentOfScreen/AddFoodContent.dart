@@ -2,6 +2,7 @@ import 'package:bmi_project/provider/provider.dart';
 import 'package:bmi_project/ui/general-widgets/StringDropDownButton.dart';
 import 'package:bmi_project/ui/general-widgets/StyleButton.dart';
 import 'package:bmi_project/ui/general-widgets/TextFieldWithBorder.dart';
+import 'package:bmi_project/ui/general-widgets/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class AddFoodContent extends StatefulWidget {

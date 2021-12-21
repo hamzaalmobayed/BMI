@@ -1,4 +1,6 @@
+import 'package:bmi_project/provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 class TextFieldWithBorder extends StatelessWidget {
   TextEditingController con= TextEditingController();
   double width;
@@ -21,7 +23,8 @@ class TextFieldWithBorder extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border.fromBorderSide(BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
           ),
-          child: new TextField(
+          child: new TextFormField(
+            validator: Provider.of<BMIProvider>(context,listen: false).validateName,
             textAlign: TextAlign.center,
             controller: con,
             decoration: new InputDecoration(

@@ -1,4 +1,5 @@
 import 'package:bmi_project/provider/provider.dart';
+import 'package:bmi_project/ui/general-widgets/StringDropDownButton.dart';
 import 'package:bmi_project/ui/general-widgets/StyleButton.dart';
 import 'package:bmi_project/ui/general-widgets/TextFieldWithBorder.dart';
 import 'package:flutter/material.dart';
@@ -62,44 +63,10 @@ class _EditFoodContentState extends State<EditFoodContent> {
                 Text("category",style: TextStyle(
                     fontSize: 17, color: Colors.blue, fontWeight: FontWeight.bold),),
                 SizedBox(width: 40,),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.fromBorderSide(BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
-                  ),
-                  height: 30,
-                  width: 200,
-                  child: DropdownButton<String>(
-                    value:p.selectedCategory,
-                    icon: Container(
-                        alignment: Alignment.center,
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            border: Border(left:BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
-                        ),
-                        child: Icon(Icons.arrow_drop_down,color: Colors.blue,)
-                    ),
+                StringDropDownButton(p.selectedCategory,(newValue) {
+                  p.selectCategory(newValue);
 
-                    iconSize: 30,
-                    elevation: 16,
-                    isExpanded: true,
-                    style: TextStyle(color: Colors.black, fontSize: 17.0),
-                    underline: Container(
-                      height: 2,
-                    ),
-                    onChanged: (newValue) {
-                      p.selectCategory(newValue);
-
-                    },
-                    items:
-                    p.categoryList.map((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Center(child: Text(value,style: TextStyle( fontSize: 17.0),)),
-                      );
-                    }).toList(),
-                  ),
-                ),
+                }, p.categoryList,200)
 
               ],
             ),
@@ -119,44 +86,11 @@ class _EditFoodContentState extends State<EditFoodContent> {
                 TextFieldWithBorder(p.caloryController,100,''),
                 SizedBox(width:4,),
 
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.fromBorderSide(BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
-                  ),
-                  height: 30,
-                  width: 95,
-                  child: DropdownButton<String>(
-                    value:p.selectedCalory,
-                    icon: Container(
-                        alignment: Alignment.center,
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            border: Border(left:BorderSide(color: Colors.blue,width: 1,style:BorderStyle.solid))
-                        ),
-                        child: Icon(Icons.arrow_drop_down,color: Colors.blue,)
-                    ),
-
-                    iconSize: 30,
-                    elevation: 16,
-                    isExpanded: true,
-                    style: TextStyle(color: Colors.black, fontSize: 17.0),
-                    underline: Container(
-                      height: 2,
-                    ),
-                    onChanged: (newValue) {
+                StringDropDownButton(p.selectedCalory,
+                        (newValue) {
                       p.selectCalory(newValue);
 
-                    },
-                    items:
-                    p.caloryList.map((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Center(child: Text(value,style: TextStyle( fontSize: 12.0),)),
-                      );
-                    }).toList(),
-                  ),
-                ),
+                    },p.caloryList,95)
               ],
             ),
             SizedBox(height: 20,),
