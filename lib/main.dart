@@ -23,6 +23,14 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: RouteHelper.routeHelper.navKey,
         theme: ThemeData(
+          primaryColor: Color(0xff0B85D8),
+          buttonTheme: ButtonThemeData(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            buttonColor: Color(0xff0B85D8), // Background color (orange in my case).
+            textTheme: ButtonTextTheme.accent,
+            colorScheme:
+            Theme.of(context).colorScheme.copyWith(secondary: Colors.white), // Text color
+          ),
           fontFamily: "Cairo",
         ),
         home: FutureBuilder(
